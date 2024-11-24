@@ -4,6 +4,11 @@ import os
 import tempfile
 import torch
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+api_key = os.getenv("SERPAPI_API_KEY")
+imgur_client_id = os.getenv("IMGUR_CLIENT_ID")
 
 # YOLOv5 Object Detection
 def detect_objects_yolov5(image_path, model, conf_thresh=0.6, iou_thresh=0.3):
@@ -61,15 +66,12 @@ def process_video(video_path, model, frame_skip=30):
 
 # Main Streamlit application
 def main():
-    st.title("Object Detection in Videos")
-    st.write("Upload a video to detect objects and search for items using Google Lens.")
+    st.title("Buy What You See")
+    st.write("Upload a video to detect objects and search for items on the web")
 
     # Inputs
     # imgur_client_id = st.text_input("Imgur Client ID:", type="password")
     # api_key = st.text_input("SerpApi API Key:", type="password")
-
-    api_key = "d391abaa4565995bf471c54bb1644750e3f874ae0c8f59a48dfb9ae7e590cc7e"
-    imgur_client_id = "2f2e44e79e1f7fb"
 
     uploaded_file = st.file_uploader("Upload a video", type=["mp4", "avi", "mov", "mkv"])
     if uploaded_file:
