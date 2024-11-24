@@ -69,11 +69,8 @@ def main():
     st.title("Buy What You See")
     st.write("Upload an image, detect objects using YOLOv5, and search for similar items.")
 
-    # api_key = st.text_input("Enter your SerpApi API Key:", type="password")
-    # imgur_client_id = st.text_input("Enter your Imgur Client ID:", type="password")
-
-    api_key = "d391abaa4565995bf471c54bb1644750e3f874ae0c8f59a48dfb9ae7e590cc7e"
-    imgur_client_id = "2f2e44e79e1f7fb"
+    api_key = st.text_input("Enter your SerpApi API Key:", type="password")
+    imgur_client_id = st.text_input("Enter your Imgur Client ID:", type="password")
 
     uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
