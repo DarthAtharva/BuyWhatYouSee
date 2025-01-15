@@ -74,49 +74,42 @@ def main():
 
     uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
-    # Add a "Start" button to initiate the process
     if st.button("Start"):
         if uploaded_file:
-            # Save the uploaded file to a temporary location
+
             with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as temp_file:
                 temp_file.write(uploaded_file.read())
                 image_path = temp_file.name
 
-            # Display the uploaded image
             st.image(image_path, caption="Uploaded Image", use_container_width=True)
 
-            # Load the image using OpenCV
             image = cv2.imread(image_path)
             if image is None:
                 st.error("Error loading the image. Please upload a valid image file.")
                 return
 
-            # Define output directory for cropped objects
-            output_dir = tempfile.mkdtemp()  # Create a temporary directory
+            output_dir = tempfile.mkdtemp() 
 
-            # Show loading spinner
+
             with st.spinner("Detecting objects..."):
-                # Run object detection
+
                 detected_objects, _ = detect_objects_yolov5(image_path)
 
             if detected_objects:
                 st.write(f"Detected {len(detected_objects)} objects.")
                 for i, obj in enumerate(detected_objects):
                     bbox = obj["bbox"]
-                    # Crop and save the object
+              
                     cropped_image_path = crop_and_save_object(image, bbox, output_dir, i)
 
-                    # Display cropped object
                     st.image(cropped_image_path, caption=f"Object {i + 1}", use_container_width=True)
 
-                    # Upload cropped image to Imgur
                     st.write(f"Uploading Object {i + 1} to Imgur...")
                     image_url = upload_to_imgur(cropped_image_path, imgur_client_id)
 
                     if image_url:
                         st.write(f"Imgur Link: {image_url}")
-                        
-                        # Search using Google Lens API
+
                         st.write(f"Searching for Object {i + 1}...")
                         with st.spinner("Searching for similar items..."):
                             visual_matches = perform_google_lens_search(api_key, image_url)
