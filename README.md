@@ -15,13 +15,6 @@ A **Streamlit application** that enables users to upload a video, detect objects
 
 ---
 
-## Demo
-
-![App Screenshot](#)  
-*(Add a screenshot or GIF showing the app in action)*  
-
----
-
 ## Installation
 
 1. Clone the repository:  
